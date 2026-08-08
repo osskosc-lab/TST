@@ -1,0 +1,51 @@
+{
+  "n_runs": 1600,
+  "n_structural_runs": 1400,
+  "n_structural_T_detected": 1086,
+  "adequate_regimes_ge50_T": 7,
+  "observed_pathways": ["T_ONLY", "S_ONLY", "Q_ONLY", "S_Q_T", "Q_S_T"],
+  "cramers_v": 0.13181668501956995,
+  "permutation_p": 0.00009999000099990002,
+  "permutation_v_q99": 0.09968959575256087,
+  "cv_logloss": {
+    "gain": 0.012269737429072558,
+    "model_logloss": 1.2665582578265617,
+    "baseline_logloss": 1.2822916395513517,
+    "class_counts": {"Q_ONLY": 439, "Q_S_T": 38, "S_ONLY": 103, "S_Q_T": 91, "T_ONLY": 415}
+  },
+  "leave_one_regime_out": {
+    "by_regime": {
+      "R1_reverse25": 0.012591632675035602,
+      "R2_reverse50": 0.028803657980643105,
+      "R3_mixed_abrupt": 0.005607489003705335,
+      "R4_mixed_gradual": -0.011832570911084916,
+      "R5_add_heavy": -0.02083826937565858,
+      "R6_delete_heavy": 0.004910264848968393,
+      "R7_recurrent_mixed": -0.0015490758484992817
+    },
+    "median_gain": 0.004910264848968393,
+    "positive_regimes": 4,
+    "n_valid": 7
+  },
+  "control_T_rates": {"C0_stable": 0.0, "C1_weight_only": 0.0},
+  "detector_audit_pass": true,
+  "gates": {
+    "C1_measurement_adequacy": true,
+    "C2_pathway_heterogeneity": false,
+    "C3_heldout_prediction": false,
+    "C4_regime_transfer": false
+  },
+  "pass_count": 1,
+  "verdict": "Regime-conditioned pathway hypothesis not supported",
+  "regime_results": {
+    "R1_reverse25": {"n": 200, "T_detected": 79, "T_rate": 0.395, "pathway_counts": {"T_ONLY": 34, "S_ONLY": 3, "Q_ONLY": 36, "S_Q_T": 3, "Q_S_T": 3}, "complete_triads": 10, "complete_order_rate": 0.3},
+    "R2_reverse50": {"n": 200, "T_detected": 200, "T_rate": 1.0, "pathway_counts": {"T_ONLY": 61, "S_ONLY": 26, "Q_ONLY": 68, "S_Q_T": 35, "Q_S_T": 10}, "complete_triads": 50, "complete_order_rate": 0.7},
+    "R3_mixed_abrupt": {"n": 200, "T_detected": 188, "T_rate": 0.94, "pathway_counts": {"T_ONLY": 65, "S_ONLY": 25, "Q_ONLY": 77, "S_Q_T": 18, "Q_S_T": 3}, "complete_triads": 26, "complete_order_rate": 0.6923076923076923},
+    "R4_mixed_gradual": {"n": 200, "T_detected": 187, "T_rate": 0.935, "pathway_counts": {"T_ONLY": 79, "S_ONLY": 11, "Q_ONLY": 81, "S_Q_T": 12, "Q_S_T": 4}, "complete_triads": 17, "complete_order_rate": 0.7058823529411765},
+    "R5_add_heavy": {"n": 200, "T_detected": 66, "T_rate": 0.33, "pathway_counts": {"T_ONLY": 29, "S_ONLY": 7, "Q_ONLY": 22, "S_Q_T": 5, "Q_S_T": 3}, "complete_triads": 9, "complete_order_rate": 0.5555555555555556},
+    "R6_delete_heavy": {"n": 200, "T_detected": 170, "T_rate": 0.85, "pathway_counts": {"T_ONLY": 78, "S_ONLY": 7, "Q_ONLY": 80, "S_Q_T": 2, "Q_S_T": 3}, "complete_triads": 5, "complete_order_rate": 0.4},
+    "R7_recurrent_mixed": {"n": 200, "T_detected": 196, "T_rate": 0.98, "pathway_counts": {"T_ONLY": 69, "S_ONLY": 24, "Q_ONLY": 75, "S_Q_T": 16, "Q_S_T": 12}, "complete_triads": 55, "complete_order_rate": 0.2909090909090909}
+  },
+  "workflow_run_id": 31248767753,
+  "artifact_id": 9019336723
+}
