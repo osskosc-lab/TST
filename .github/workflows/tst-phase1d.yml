@@ -1,0 +1,66 @@
+name: TST Phase 1d causal intervention
+
+on:
+  pull_request:
+    paths:
+      - 'phase1d/**'
+      - '.github/workflows/tst-phase1d.yml'
+  push:
+    branches:
+      - agent/tst-phase1d-causal-intervention
+    paths:
+      - 'phase1d/**'
+      - '.github/workflows/tst-phase1d.yml'
+  workflow_dispatch:
+
+jobs:
+  shard:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - scenario: S5
+            seeds: 200
+          - scenario: S7
+            seeds: 200
+          - scenario: S0
+            seeds: 100
+          - scenario: S2
+            seeds: 100
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r phase1/requirements.txt
+      - name: Run paired intervention shard
+        run: python phase1d/run_shard.py --scenario ${{ matrix.scenario }} --seeds ${{ matrix.seeds }} --out phase1d/shards/${{ matrix.scenario }}.csv
+      - uses: actions/upload-artifact@v4
+        with:
+          name: phase1d-${{ matrix.scenario }}
+          path: phase1d/shards/${{ matrix.scenario }}.csv
+
+  aggregate:
+    needs: shard
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r phase1/requirements.txt
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: phase1d-*
+          path: phase1d/shards
+          merge-multiple: true
+      - name: Compute paired causal estimands once
+        run: python phase1d/aggregate.py --indir phase1d/shards --outdir phase1d/results/confirmatory
+      - name: Print report
+        run: cat phase1d/results/confirmatory/REPORT.md
+      - uses: actions/upload-artifact@v4
+        with:
+          name: tst-phase1d-confirmatory
+          path: phase1d/results/confirmatory/
