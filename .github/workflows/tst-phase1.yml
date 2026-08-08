@@ -1,0 +1,27 @@
+name: TST Phase 1 reproducibility
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'phase1/**'
+      - '.github/workflows/tst-phase1.yml'
+  pull_request:
+    paths:
+      - 'phase1/**'
+      - '.github/workflows/tst-phase1.yml'
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r phase1/requirements.txt
+      - name: Smoke test
+        working-directory: phase1
+        run: python -m tst_phase1.run --mode calibration --seeds-per-scenario 2 --permutations 5 --jobs 1 --outdir /tmp/tst-smoke
+      - name: Assert output exists
+        run: test -f /tmp/tst-smoke/summary.json
