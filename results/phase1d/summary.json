@@ -1,0 +1,86 @@
+{
+  "n_arm_rows": 2400,
+  "n_structural_environments": 400,
+  "manipulation": {
+    "shadow_clip_reduction": 0.15787836867806398,
+    "seeking_entropy_qplus": 0.8301442041653573,
+    "seeking_entropy_qminus": 3.2123989623044484e-288,
+    "seeking_entropy_reduction": 1.0
+  },
+  "primary": {
+    "shadow_ate": 0.006089642136491863,
+    "shadow_bca95": [-0.002001624217141519, 0.01442497534284835],
+    "seeking_ate": 0.20344897674744694,
+    "seeking_bca95": [0.18312430634007457, 0.2226108464962343],
+    "interaction": -0.00004273422109066116,
+    "interaction_bca95": [-0.016667630575828447, 0.016912665479385816]
+  },
+  "scenario_effects": {
+    "S5": {
+      "n_environments": 200,
+      "shadow_ate": 0.002145166776707863,
+      "shadow_ci95": [-0.010747040454892443, 0.015009774039368368],
+      "seeking_ate": 0.24255189507130395,
+      "seeking_ci95": [0.21183901115072878, 0.2728330899299982],
+      "interaction": -0.00790232957254781
+    },
+    "S7": {
+      "n_environments": 200,
+      "shadow_ate": 0.010034117496275863,
+      "shadow_ci95": [-0.00003891276768828493, 0.020614216775872822],
+      "seeking_ate": 0.1643460584235899,
+      "seeking_ci95": [0.1411201493257443, 0.18835727100824104],
+      "interaction": 0.007816861130366488
+    }
+  },
+  "shadow_gates": {
+    "DS1_manipulation": false,
+    "DS2_ATE_ge_0.03": false,
+    "DS3_BCa_LCI_gt_0.01": false,
+    "DS4_positive_both_scenarios": true
+  },
+  "seeking_gates": {
+    "DQ1_manipulation": true,
+    "DQ2_ATE_ge_0.03": true,
+    "DQ3_BCa_LCI_gt_0.01": true,
+    "DQ4_positive_both_scenarios": true
+  },
+  "negative_control_audit_pass": false,
+  "controls": {
+    "S0": {
+      "base_auge": 0.05115844115133791,
+      "mean_arm_minus_base": {
+        "S1Q0": 0.4042875997181072,
+        "S0Q1": 0.0054817606494765685,
+        "S0Q0": 0.3990707315176029
+      },
+      "max_increase": 0.4042875997181072
+    },
+    "S2": {
+      "base_auge": 0.05369627782810227,
+      "mean_arm_minus_base": {
+        "S1Q0": 0.3107045033867074,
+        "S0Q1": 0.0042819861248787365,
+        "S0Q0": 0.2973160775656674
+      },
+      "max_increase": 0.3107045033867074
+    }
+  },
+  "recovery_success_rates": {
+    "Splus_Qplus": 0.3925,
+    "Splus_Qminus": 0.185,
+    "Sminus_Qplus": 0.365,
+    "Sminus_Qminus": 0.1825
+  },
+  "raw_gate_verdicts": {
+    "shadow": "manipulation invalid",
+    "seeking": "main causal gates pass"
+  },
+  "final_interpretation": {
+    "shadow": "inconclusive because the preregistered manipulation-strength gate failed",
+    "seeking": "large paired effect observed, but mechanistic interpretation is downgraded because the preregistered negative-control audit failed; Q-minus behaves as a nonspecific destabilizing intervention in stable and weight-only environments",
+    "overall": "Phase 1d does not yet establish clean TST-specific causal roles for Shadow or Seeking"
+  },
+  "github_actions_run": 31252223338,
+  "artifact_id": 9020353104
+}
