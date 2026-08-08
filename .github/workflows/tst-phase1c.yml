@@ -7,6 +7,10 @@ on:
     paths:
       - 'phase1c/**'
       - '.github/workflows/tst-phase1c.yml'
+  pull_request:
+    paths:
+      - 'phase1c/**'
+      - '.github/workflows/tst-phase1c.yml'
   workflow_dispatch:
 
 jobs:
