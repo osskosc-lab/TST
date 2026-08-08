@@ -1,0 +1,23 @@
+name: TST Phase 1c confirmatory (monolithic/manual)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  confirmatory:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: pip install -r phase1/requirements.txt
+      - name: Run Phase 1c confirmatory experiment
+        run: python phase1c/run_phase1c.py --structural-seeds 200 --control-seeds 100 --permutations 10000 --jobs 2 --outdir phase1c/results/confirmatory
+      - name: Upload result bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: tst-phase1c-confirmatory-monolithic
+          path: phase1c/results/confirmatory/

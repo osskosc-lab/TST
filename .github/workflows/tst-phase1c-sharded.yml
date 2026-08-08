@@ -1,0 +1,71 @@
+name: TST Phase 1c confirmatory sharded
+
+on:
+  pull_request:
+    paths:
+      - 'phase1c/**'
+      - '.github/workflows/tst-phase1c-sharded.yml'
+  workflow_dispatch:
+
+jobs:
+  shard:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - regime: R1_reverse25
+            seeds: 200
+          - regime: R2_reverse50
+            seeds: 200
+          - regime: R3_mixed_abrupt
+            seeds: 200
+          - regime: R4_mixed_gradual
+            seeds: 200
+          - regime: R5_add_heavy
+            seeds: 200
+          - regime: R6_delete_heavy
+            seeds: 200
+          - regime: R7_recurrent_mixed
+            seeds: 200
+          - regime: C0_stable
+            seeds: 100
+          - regime: C1_weight_only
+            seeds: 100
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r phase1/requirements.txt
+      - name: Run fixed regime shard
+        run: python phase1c/run_shard.py --regime '${{ matrix.regime }}' --seeds '${{ matrix.seeds }}' --jobs 2 --out 'phase1c/shards/${{ matrix.regime }}.json'
+      - uses: actions/upload-artifact@v4
+        with:
+          name: phase1c-${{ matrix.regime }}
+          path: phase1c/shards/${{ matrix.regime }}.json
+
+  aggregate:
+    needs: shard
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r phase1/requirements.txt
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: phase1c-*
+          path: phase1c/shards
+          merge-multiple: true
+      - name: Aggregate 1,600 locked runs and compute confirmatory statistics once
+        run: python phase1c/aggregate_shards.py --indir phase1c/shards --permutations 10000 --outdir phase1c/results/confirmatory
+      - name: Print confirmatory report
+        run: cat phase1c/results/confirmatory/REPORT.md
+      - uses: actions/upload-artifact@v4
+        with:
+          name: tst-phase1c-confirmatory
+          path: phase1c/results/confirmatory/
