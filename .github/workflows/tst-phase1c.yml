@@ -1,0 +1,31 @@
+name: TST Phase 1c confirmatory
+
+on:
+  push:
+    branches:
+      - agent/tst-phase1c-regime-pathways
+    paths:
+      - 'phase1c/**'
+      - '.github/workflows/tst-phase1c.yml'
+  workflow_dispatch:
+
+jobs:
+  confirmatory:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: pip install -r phase1/requirements.txt
+      - name: Run Phase 1c confirmatory experiment
+        run: python phase1c/run_phase1c.py --structural-seeds 200 --control-seeds 100 --permutations 10000 --jobs 2 --outdir phase1c/results/confirmatory
+      - name: Print report
+        run: cat phase1c/results/confirmatory/REPORT.md
+      - name: Upload result bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: tst-phase1c-confirmatory
+          path: phase1c/results/confirmatory/
