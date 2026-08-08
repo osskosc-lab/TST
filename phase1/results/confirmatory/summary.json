@@ -1,0 +1,37 @@
+{
+  "omega": 0.0641025641025641,
+  "n_transformation_trials": 78,
+  "null_median": 0.0,
+  "delta_omega": 0.0641025641025641,
+  "delta_omega_bca95": [0.02564102564102564, 0.14102564102564102],
+  "fpr": {"S0": 0.0, "S1": 0.06, "S2": 0.0},
+  "auc": {"auc_S": 0.5238439037029629, "auc_SQ": 0.654399886053355, "delta_auc": 0.13055598235039212, "positives": 1560},
+  "gates": {
+    "G1_omega_ge_0.70": false,
+    "G2_deltaOmega_BCa_LCI_gt_0.10": false,
+    "G3_S0_S1_FPR_lt_0.05": false,
+    "G4_S2_parameter_only_FPR_lt_0.10": true,
+    "G5_deltaAUC_ge_0.03": true
+  },
+  "pass_count": 2,
+  "verdict": "Core temporal hypothesis falsified",
+  "scenario_summary": {
+    "S0": {"n": 50, "transformation_detected": 0, "T_detection_rate": 0.0, "omega": null, "S_detect_rate": 0.06, "Q_detect_rate": 0.06},
+    "S1": {"n": 50, "transformation_detected": 3, "T_detection_rate": 0.06, "omega": 0.0, "S_detect_rate": 1.0, "Q_detect_rate": 0.16},
+    "S2": {"n": 50, "transformation_detected": 0, "T_detection_rate": 0.0, "omega": null, "S_detect_rate": 0.04, "Q_detect_rate": 0.1},
+    "S3": {"n": 50, "transformation_detected": 0, "T_detection_rate": 0.0, "omega": null, "S_detect_rate": 0.06, "Q_detect_rate": 0.26},
+    "S4": {"n": 50, "transformation_detected": 1, "T_detection_rate": 0.02, "omega": 0.0, "S_detect_rate": 0.1, "Q_detect_rate": 0.14},
+    "S5": {"n": 50, "transformation_detected": 19, "T_detection_rate": 0.38, "omega": 0.0, "S_detect_rate": 0.16, "Q_detect_rate": 0.46},
+    "S6": {"n": 50, "transformation_detected": 3, "T_detection_rate": 0.06, "omega": 0.0, "S_detect_rate": 0.14, "Q_detect_rate": 0.4},
+    "S7": {"n": 50, "transformation_detected": 48, "T_detection_rate": 0.96, "omega": 0.10416666666666667, "S_detect_rate": 0.22, "Q_detect_rate": 0.5},
+    "S8": {"n": 50, "transformation_detected": 0, "T_detection_rate": 0.0, "omega": null, "S_detect_rate": 0.02, "Q_detect_rate": 1.0},
+    "S9": {"n": 50, "transformation_detected": 4, "T_detection_rate": 0.08, "omega": 0.0, "S_detect_rate": 0.18, "Q_detect_rate": 0.44}
+  },
+  "null_quantiles": {"q025": 0.0, "q975": 0.01282051282051282},
+  "mode": "confirmatory",
+  "seeds_per_scenario": 50,
+  "n_runs": 500,
+  "permutations": 1000,
+  "bootstrap": 2000,
+  "execution": "two deterministic 25-seed batches merged before all confirmatory statistics"
+}
