@@ -1,0 +1,43 @@
+{
+  "phase": "TST Phase 1b",
+  "hypothesis": "Conditional on Shadow, Seeking, and Transformation all occurring, tau_S < tau_Q < tau_T with Omega_c >= 0.70.",
+  "n_runs": 900,
+  "scenarios": ["S5", "S7", "S9"],
+  "seeds_per_scenario": 300,
+  "n_complete_triads": 62,
+  "ordered_triads": 35,
+  "omega_c": 0.5645161290322581,
+  "wilson95": [0.44092987972148767, 0.6805741109751094],
+  "event_time_null": {
+    "permutations": 10000,
+    "median": 0.3548387096774194,
+    "q95": 0.43548387096774194,
+    "delta_vs_median": 0.20967741935483875,
+    "empirical_p": 0.00009999000099990002
+  },
+  "gates": {
+    "B1_n_complete_ge_25": true,
+    "B2_omega_c_ge_0.70": false,
+    "B3_wilson_LCI_gt_0.50": false,
+    "B4_matched_timing_null": true
+  },
+  "verdict": "Conditional-order hypothesis not supported",
+  "scenario_results": {
+    "S5": {"n": 300, "transformation_detected": 122, "complete_triads": 11, "ordered": 9, "omega_c": 0.8181818181818182, "wilson95": [0.523019438039156, 0.9486323102539149], "matched_null_median": 0.5454545454545454, "matched_null_p": 0.0033996600339966003},
+    "S7": {"n": 300, "transformation_detected": 277, "complete_triads": 48, "ordered": 24, "omega_c": 0.5, "wilson95": [0.36389330502679385, 0.6361066949732062], "matched_null_median": 0.3333333333333333, "matched_null_p": 0.0004999500049995},
+    "S9": {"n": 300, "transformation_detected": 31, "complete_triads": 3, "ordered": 2, "omega_c": 0.6666666666666666, "wilson95": [0.2076596008020477, 0.9385080552796037], "matched_null_median": 0.3333333333333333, "matched_null_p": 0.3314668533146685}
+  },
+  "raw_x_audit": {
+    "n_runs": 300,
+    "complete_triads": 12,
+    "ordered": 3,
+    "omega_c": 0.25,
+    "wilson95": [0.08894166839405471, 0.5323053349335657],
+    "complete_triad_rate": 0.04,
+    "paired_original_subset_ordered_runs": 19,
+    "paired_raw_permuted_ordered_runs": 3,
+    "mcnemar_discordant_original_only": 17,
+    "mcnemar_discordant_raw_only": 1,
+    "mcnemar_exact_p": 0.00014495849609375
+  }
+}
