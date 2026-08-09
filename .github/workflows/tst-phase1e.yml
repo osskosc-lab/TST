@@ -1,0 +1,120 @@
+name: TST Phase 1e selective causal
+
+on:
+  push:
+    branches:
+      - agent/tst-phase1e-selective-causal
+    paths:
+      - 'phase1e/**'
+      - '.github/workflows/tst-phase1e.yml'
+  pull_request:
+    branches:
+      - agent/tst-phase1d-causal-intervention
+    paths:
+      - 'phase1e/**'
+      - '.github/workflows/tst-phase1e.yml'
+  workflow_dispatch:
+
+jobs:
+  calibrate:
+    strategy:
+      matrix:
+        scenario: [S0, S2]
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r phase1/requirements.txt
+      - name: Negative-control calibration shard
+        run: python phase1e/run_calibration.py --scenario ${{ matrix.scenario }} --seeds 60 --out phase1e/calibration/${{ matrix.scenario }}.csv
+      - uses: actions/upload-artifact@v4
+        with:
+          name: phase1e-cal-${{ matrix.scenario }}
+          path: phase1e/calibration/${{ matrix.scenario }}.csv
+
+  select:
+    needs: calibrate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r phase1/requirements.txt
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: phase1e-cal-*
+          path: phase1e/calibration
+          merge-multiple: true
+      - name: Freeze safe intervention strengths
+        run: python phase1e/select_calibration.py --indir phase1e/calibration --out phase1e/calibration/selected.json
+      - name: Print selection
+        run: cat phase1e/calibration/selected.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: phase1e-selected-calibration
+          path: phase1e/calibration/selected.json
+
+  confirmatory:
+    needs: select
+    strategy:
+      matrix:
+        include:
+          - scenario: S0
+            seeds: 100
+          - scenario: S2
+            seeds: 100
+          - scenario: S5
+            seeds: 300
+          - scenario: S7
+            seeds: 300
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r phase1/requirements.txt
+      - uses: actions/download-artifact@v4
+        with:
+          name: phase1e-selected-calibration
+          path: phase1e/calibration
+      - name: Locked paired confirmatory shard
+        run: python phase1e/run_confirmatory_shard.py --scenario ${{ matrix.scenario }} --seeds ${{ matrix.seeds }} --calibration phase1e/calibration/selected.json --out phase1e/shards/${{ matrix.scenario }}.csv
+      - uses: actions/upload-artifact@v4
+        with:
+          name: phase1e-confirm-${{ matrix.scenario }}
+          path: phase1e/shards/${{ matrix.scenario }}.csv
+
+  aggregate:
+    needs: confirmatory
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r phase1/requirements.txt
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: phase1e-confirm-*
+          path: phase1e/shards
+          merge-multiple: true
+      - uses: actions/download-artifact@v4
+        with:
+          name: phase1e-selected-calibration
+          path: phase1e/calibration
+      - name: Compute final paired selective causal estimands once
+        run: python phase1e/aggregate_confirmatory.py --indir phase1e/shards --calibration phase1e/calibration/selected.json --outdir phase1e/results/confirmatory
+      - name: Print report
+        run: cat phase1e/results/confirmatory/REPORT.md
+      - uses: actions/upload-artifact@v4
+        with:
+          name: tst-phase1e-confirmatory
+          path: |
+            phase1e/results/confirmatory/
+            phase1e/calibration/selected.json
