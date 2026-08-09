@@ -1,0 +1,64 @@
+{
+  "workflow_run": 31293715389,
+  "artifact_id": 9032275851,
+  "n_arm_rows": 3200,
+  "selected_gamma": null,
+  "selected_clip_sq": 3.0,
+  "calibration": {
+    "seeking_calibration_pass": false,
+    "shadow_calibration_pass": true,
+    "seeking_min_candidate_gamma": 1.1,
+    "seeking_gamma_1_1_entropy_reduction": 0.9121167277236071,
+    "seeking_gamma_1_1_S0_auge_increase": 0.05027833516659519,
+    "seeking_gamma_1_1_S2_auge_increase": 0.05390943355096179,
+    "shadow_selected_clip_sq": 3.0,
+    "shadow_calibration_manipulation": 0.2195256155057703,
+    "shadow_calibration_S0_auge_increase": 0.010270342715448659,
+    "shadow_calibration_S2_auge_increase": 0.015559639704364369
+  },
+  "confirmatory_manipulation": {
+    "shadow_clip_reduction": 0.23488174931850542,
+    "seeking_entropy_reduction": 0.0
+  },
+  "structural": {
+    "shadow_ate": 0.014168876968887195,
+    "shadow_bca95": [0.013037319834238476, 0.015421263813216048],
+    "seeking_ate": 0.0
+  },
+  "controls_pooled": {
+    "shadow_ate": 0.011428956195526275,
+    "shadow_bca95": [0.009220910312465339, 0.0138770344897684],
+    "seeking_ate": 0.0
+  },
+  "selectivity_DID": {
+    "shadow": 0.0027399207733609203,
+    "shadow_bca95": [0.00000952184097521853, 0.005270673133608868],
+    "seeking": 0.0
+  },
+  "scenario_effects": {
+    "S5": {"shadow_ate": 0.015331516136581994, "seeking_ate": 0.0},
+    "S7": {"shadow_ate": 0.0130062378011924, "seeking_ate": 0.0}
+  },
+  "control_effects": {
+    "S0": {"shadow_ate": 0.012669875730844495, "seeking_ate": 0.0},
+    "S2": {"shadow_ate": 0.01018803666020805, "seeking_ate": 0.0}
+  },
+  "shadow_gates": {
+    "ES1_safe_adequate_calibration": true,
+    "ES2_holdout_controls_safe": true,
+    "ES3_structural_ATE_ge_0.03": false,
+    "ES4_structural_BCa_LCI_gt_0.01": true,
+    "ES5_positive_S5_S7": true,
+    "ES6_DID_selective": false
+  },
+  "seeking_gates": {
+    "EQ1_safe_calibration": false,
+    "EQ2_holdout_controls_safe": true,
+    "EQ3_structural_ATE_ge_0.03": false,
+    "EQ4_structural_BCa_LCI_gt_0.01": false,
+    "EQ5_positive_S5_S7": false,
+    "EQ6_DID_selective": false
+  },
+  "shadow_verdict": "Shadow selective causal relevance not supported",
+  "seeking_verdict": "No safe Seeking intervention found"
+}
